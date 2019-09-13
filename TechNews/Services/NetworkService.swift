@@ -13,7 +13,7 @@ class NetworkService {
     private init() {}
     
     private let APIKey = "fc5efb82278a4d93b8b23753b874e35a"
-    let baseUrl = URL(string: "https://newsapi.org/v2/top-headlines?category=technology&country=us")!
+    private let baseUrl = URL(string: "https://newsapi.org/v2/top-headlines?category=technology&country=us")!
     
     func downloadNews(completion: @escaping ([News]?) -> Void) {
         var request = URLRequest(url: baseUrl)
@@ -25,7 +25,9 @@ class NetworkService {
             }
             
             if let articles = try? JSONDecoder().decode(Articles.self, from: newsData) {
-                completion(articles.news)
+                DispatchQueue.main.async {
+                    completion(articles.news)
+                }
             }
         }
         task.resume()

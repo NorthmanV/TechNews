@@ -14,6 +14,7 @@
 		87FB7B13232970A200EA801B /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FB7B12232970A200EA801B /* NetworkService.swift */; };
 		87FB7B17232975CF00EA801B /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FB7B16232975CF00EA801B /* News.swift */; };
 		87FB7B19232986F300EA801B /* Articles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FB7B18232986F300EA801B /* Articles.swift */; };
+		87FB7B1B232C109800EA801B /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FB7B1A232C109800EA801B /* NewsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		87FB7B12232970A200EA801B /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		87FB7B16232975CF00EA801B /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		87FB7B18232986F300EA801B /* Articles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Articles.swift; sourceTree = "<group>"; };
+		87FB7B1A232C109800EA801B /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		87FB7B15232975A800EA801B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				87FB7B1A232C109800EA801B /* NewsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 				87FB7B0423296C2D00EA801B /* TechNews.xcdatamodeld in Sources */,
 				87FB7AFE23296C2D00EA801B /* MainVC.swift in Sources */,
 				87FB7B13232970A200EA801B /* NetworkService.swift in Sources */,
+				87FB7B1B232C109800EA801B /* NewsCell.swift in Sources */,
 				87FB7B17232975CF00EA801B /* News.swift in Sources */,
 				87FB7B19232986F300EA801B /* Articles.swift in Sources */,
 				87FB7AFC23296C2D00EA801B /* AppDelegate.swift in Sources */,
