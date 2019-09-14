@@ -6,7 +6,7 @@
 //  Copyright © 2019 Ruslan Akberov. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class NetworkService {
     static let shared = NetworkService()
@@ -25,10 +25,25 @@ class NetworkService {
             }
             
             if let articles = try? JSONDecoder().decode(Articles.self, from: newsData) {
-                DispatchQueue.main.async {
-                    completion(articles.news)
-                }
+                DispatchQueue.main.async { completion(articles.news) }
+            } else {
+                completion(nil)
             }
+        }
+        task.resume()
+    }
+    
+    func downloadImage(url: String?, completion: @escaping (UIImage?) -> Void) {
+        guard let imageUrl = URL(string: url ?? "") else {
+            completion(nil)
+            return
+        }
+        let task = URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+            guard error == nil, let imageData = data else {
+                completion(nil)
+                return
+            }
+            DispatchQueue.main.async { completion(UIImage(data: imageData)) }
         }
         task.resume()
     }

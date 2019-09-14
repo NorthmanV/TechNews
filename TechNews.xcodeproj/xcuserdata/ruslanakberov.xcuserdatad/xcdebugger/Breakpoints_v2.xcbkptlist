@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TechNews/Services/NetworkService.swift"
-            timestampString = "590101021.917153"
+            filePath = "TechNews/Controllers/MainVC.swift"
+            timestampString = "590157367.691274"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "downloadNews(completion:)"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "showImage(url:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TechNews/Services/NetworkService.swift"
-            timestampString = "590101021.917236"
+            filePath = "TechNews/Views/NewsCell.swift"
+            timestampString = "590157367.691587"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "downloadNews(completion:)"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "configureWith(title:description:imageUrl:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

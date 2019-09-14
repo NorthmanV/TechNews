@@ -31,6 +31,7 @@ class MainVC: UITableViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.delaysContentTouches = false
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -39,11 +40,21 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: newsCellId, for: indexPath) as! NewsCell
+        cell.delegate = self
         let specificNews = news[indexPath.row]
-        cell.configureWith(title: specificNews.title, description: specificNews.description)
+        cell.configureWith(title: specificNews.title, description: specificNews.description, imageUrl: specificNews.imageUrl)
         return cell
     }
 
+}
 
+extension MainVC: NewsCellDelegate {
+    
+    func showImage(url: String?) {
+        let newsImageVC = NewsImageVC()
+        newsImageVC.imageUrl = url
+        navigationController?.pushViewController(newsImageVC, animated: true)
+    }
+    
 }
 
