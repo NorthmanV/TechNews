@@ -12,20 +12,27 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    private let APIKey = "fc5efb82278a4d93b8b23753b874e35a"
-    private let baseUrl = URL(string: "https://newsapi.org/v2/top-headlines?category=technology&country=us")!
+    private let APIKey = "feb17943bff24c4ba29db88d0979907b"
+    private let baseUrl = URL(string: "https://newsapi.org/v2/top-headlines")!
     
-    func downloadNews(completion: @escaping ([News]?) -> Void) {
-        var request = URLRequest(url: baseUrl)
+    func downloadNews(page: Int, completion: @escaping ([News]?) -> Void) {
+        var components = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)!
+        let queryCategory = URLQueryItem(name: "category", value: "technology")
+        let queryCountry = URLQueryItem(name: "country", value: "us")
+        let queryPage = URLQueryItem(name: "page", value: String(page))
+        components.queryItems = [queryCategory, queryCountry, queryPage]
+        let url = components.url!
+        var request = URLRequest(url: url)
         request.setValue(APIKey, forHTTPHeaderField: "X-Api-Key")
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil, let newsData = data else {
                 completion(nil)
                 return
             }
-            
-            if let articles = try? JSONDecoder().decode(Articles.self, from: newsData) {
-                DispatchQueue.main.async { completion(articles.news) }
+            let decoder = JSONDecoder()
+            decoder.userInfo[CodingUserInfoKey.context!] = DataService.shared.context
+            if let articles = try? decoder.decode(Articles.self, from: newsData) {
+                completion(articles.news) 
             } else {
                 completion(nil)
             }

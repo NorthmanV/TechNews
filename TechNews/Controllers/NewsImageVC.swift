@@ -30,7 +30,7 @@ class NewsImageVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        downloadImge()
+        downloadImage()
     }
 
     private func setupViews() {
@@ -51,7 +51,7 @@ class NewsImageVC: UIViewController {
         activityIndicator.startAnimating()
     }
     
-    private func downloadImge() {
+    private func downloadImage() {
         NetworkService.shared.downloadImage(url: imageUrl) { image in
             DispatchQueue.main.async { self.activityIndicator.stopAnimating() }
             if let image = image {

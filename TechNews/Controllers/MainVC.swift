@@ -12,16 +12,20 @@ class MainVC: UITableViewController {
     
     private var news = [News]()
     private let newsCellId = "newsCellId"
+    private var currentRequestPage = 1
+    private var shouldLoad = false
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        NetworkService.shared.downloadNews { news in
-            if let news = news {
-                self.news = news
-                self.tableView.reloadData()
-            }
-        }
+        downloadNews()
     }
     
     private func setupViews() {
@@ -32,6 +36,40 @@ class MainVC: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.delaysContentTouches = false
+        
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height:20))
+        footerView.backgroundColor = .clear
+        footerView.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+        tableView.tableFooterView = footerView
+        
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: .valueChanged)
+        
+        if let fetchedNews = DataService.shared.fetchNews() {
+            news = fetchedNews
+        }
+    }
+    
+    private func downloadNews() {
+        NetworkService.shared.downloadNews(page: currentRequestPage) { news in
+            if let _ = news {
+                DataService.shared.saveContext()
+                let fetchedNews = DataService.shared.fetchNews()
+                self.news = fetchedNews ?? [News]()
+                DispatchQueue.main.async {
+                    if self.refreshControl!.isRefreshing {
+                        self.refreshControl!.endRefreshing()
+                    }
+                    self.tableView.reloadData()
+                    self.currentRequestPage += 1
+                    self.shouldLoad = true
+                    print(self.news.count)
+                }
+            }
+            DispatchQueue.main.async { self.activityIndicator.stopAnimating() }
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -42,8 +80,26 @@ class MainVC: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: newsCellId, for: indexPath) as! NewsCell
         cell.delegate = self
         let specificNews = news[indexPath.row]
-        cell.configureWith(title: specificNews.title, description: specificNews.description, imageUrl: specificNews.imageUrl)
+        cell.configureWith(title: specificNews.title, description: specificNews.descr, imageUrl: specificNews.imageUrl)
         return cell
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let scrollHeight = scrollView.frame.height
+        
+        if offsetY > contentHeight - scrollHeight && shouldLoad {
+            shouldLoad = false
+            activityIndicator.startAnimating()
+            downloadNews()
+            print("END")
+        }
+    }
+    
+    @objc func refreshNews() {
+        currentRequestPage = 1
+        downloadNews()
     }
 
 }
