@@ -18,6 +18,7 @@ public class News: NSManagedObject, Codable {
         case imageUrl = "urlToImage"
         case title
         case descr = "description"
+        case date = "publishedAt"
     }
     
     public required convenience init(from decoder: Decoder) throws {
@@ -29,10 +30,12 @@ public class News: NSManagedObject, Codable {
         
         self.init(entity: entity, insertInto: managedObjectContext)
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        url = try container.decodeIfPresent(String.self, forKey: .url) ?? "undefined"
+        url = try container.decodeIfPresent(String.self, forKey: .url)
         imageUrl = try container.decodeIfPresent(String.self, forKey: .imageUrl)
         title = try container.decodeIfPresent(String.self, forKey: .title)
         descr = try container.decodeIfPresent(String.self, forKey: .descr)
+        let dateString = try container.decodeIfPresent(String.self, forKey: .date)
+        date = convertToDate(dateString: dateString)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -42,7 +45,15 @@ public class News: NSManagedObject, Codable {
         try container.encode(title, forKey: .title)
         try container.encode(descr, forKey: .descr)
     }
-
+    
+    private func convertToDate(dateString: String?) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let dateString = dateString, let date = dateFormatter.date(from: dateString) else {
+            return Date()
+        }
+        return date
+    }
 }
 
 extension CodingUserInfoKey {

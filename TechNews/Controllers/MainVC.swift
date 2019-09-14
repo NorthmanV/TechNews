@@ -65,7 +65,6 @@ class MainVC: UITableViewController {
                     self.tableView.reloadData()
                     self.currentRequestPage += 1
                     self.shouldLoad = true
-                    print(self.news.count)
                 }
             }
             DispatchQueue.main.async { self.activityIndicator.stopAnimating() }
@@ -93,7 +92,6 @@ class MainVC: UITableViewController {
             shouldLoad = false
             activityIndicator.startAnimating()
             downloadNews()
-            print("END")
         }
     }
     

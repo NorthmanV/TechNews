@@ -30,18 +30,20 @@ class DataService {
     func saveContext () {
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
         if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-                print("Unresolved error \(nserror), \(nserror.userInfo)")
+            context.performAndWait {
+                do {
+                    try context.save()
+                } catch {
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
             }
         }
     }
     
     func fetchNews() -> [News]? {
         let fetchRequest: NSFetchRequest<News> = News.fetchRequest()
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
         do {
             return try context.fetch(fetchRequest)
         } catch {
