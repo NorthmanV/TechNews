@@ -3,6 +3,7 @@
     <entity name="News" representedClassName="News" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="descr" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="image" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="url" attributeType="String" syncable="YES"/>
@@ -13,6 +14,6 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="News" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="News" positionX="-63" positionY="-18" width="128" height="135"/>
     </elements>
 </model>

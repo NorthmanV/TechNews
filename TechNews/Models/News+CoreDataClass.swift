@@ -7,12 +7,12 @@
 //
 //
 
-import Foundation
+import UIKit
 import CoreData
 
 @objc(News)
 public class News: NSManagedObject, Codable {
-    
+        
     enum CodingKeys: String, CodingKey {
         case url
         case imageUrl = "urlToImage"
@@ -53,6 +53,14 @@ public class News: NSManagedObject, Codable {
             return Date()
         }
         return date
+    }
+    
+    func downloadImage(dispatchGroup: DispatchGroup) {
+        dispatchGroup.enter()
+        NetworkService.shared.downloadImage(url: imageUrl) { downloadedImage in
+            self.image = downloadedImage?.jpegData(compressionQuality: 0.50)
+            dispatchGroup.leave()
+        }
     }
 }
 

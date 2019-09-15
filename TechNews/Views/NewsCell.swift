@@ -8,14 +8,7 @@
 
 import UIKit
 
-protocol NewsCellDelegate: class {
-    func showImage(url: String?)
-}
-
 class NewsCell: UITableViewCell {
-    
-    weak var delegate: NewsCellDelegate?
-    private var imageUrl: String?
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -24,6 +17,16 @@ class NewsCell: UITableViewCell {
         stackView.spacing = 6
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    let newsImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.image = UIImage(named: "defaultImage")
+        imageView.layer.cornerRadius = 6
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
     }()
     
     let titleLabel: UILabel = {
@@ -43,23 +46,6 @@ class NewsCell: UITableViewCell {
         return label
     }()
     
-    let imageButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Show Image", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = UIColor(red: 0, green: 122 / 255, blue: 1, alpha: 1.0)
-        button.layer.cornerRadius = 4
-        return button
-    }()
-    
-    let redDotView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 1, green: 59 / 255, blue: 48 / 255, alpha: 1.0)
-        view.layer.cornerRadius = 4
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -70,32 +56,27 @@ class NewsCell: UITableViewCell {
     }
     
     private func setupViews() {
-        imageButton.addTarget(self, action: #selector(showImage), for: .touchUpInside)
-        
         contentView.addSubview(stackView)
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 18).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+        
+        newsImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        
+        stackView.addArrangedSubview(newsImageView)
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(desctiptionLabel)
-        stackView.addArrangedSubview(imageButton)
-        
-        contentView.addSubview(redDotView)
-        redDotView.widthAnchor.constraint(equalToConstant: 8).isActive = true
-        redDotView.heightAnchor.constraint(equalToConstant: 8).isActive = true
-        redDotView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        redDotView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 6).isActive = true
     }
     
-    func configureWith(title: String?, description: String?, imageUrl: String?) {
+    func configureWith(title: String?, description: String?, image: UIImage?) {
         titleLabel.text = title
         desctiptionLabel.text = description
-        self.imageUrl = imageUrl
+        newsImageView.image = image ?? UIImage(named: "defaultImage")
     }
     
-    @objc func showImage() {
-        delegate?.showImage(url: imageUrl)
+    override func prepareForReuse() {
+        newsImageView.image = UIImage(named: "defaultImage")
     }
-    
+        
 }

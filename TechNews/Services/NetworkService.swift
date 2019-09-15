@@ -31,8 +31,16 @@ class NetworkService {
             }
             let decoder = JSONDecoder()
             decoder.userInfo[CodingUserInfoKey.context!] = DataService.shared.context
-            if let articles = try? decoder.decode(Articles.self, from: newsData) {
-                completion(articles.news) 
+            if let articles = try? decoder.decode(Articles.self, from: newsData), let news = articles.news {
+                let dispatchGroup = DispatchGroup()
+                for specificNews in news {
+                    specificNews.downloadImage(dispatchGroup: dispatchGroup)
+                }
+                let namePointer = __dispatch_queue_get_label(nil)
+                let queueName = String(cString: namePointer, encoding: .utf8)!
+                dispatchGroup.notify(queue: .init(label: queueName), execute: {
+                    completion(news)
+                })
             } else {
                 completion(nil)
             }
@@ -50,7 +58,7 @@ class NetworkService {
                 completion(nil)
                 return
             }
-            DispatchQueue.main.async { completion(UIImage(data: imageData)) }
+            completion(UIImage(data: imageData))
         }
         task.resume()
     }

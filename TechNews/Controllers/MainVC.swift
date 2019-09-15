@@ -33,11 +33,11 @@ class MainVC: UITableViewController {
         title = "Tech News"
         tableView.register(NewsCell.self, forCellReuseIdentifier: newsCellId)
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.separatorStyle = .none
+        tableView.separatorInset = .zero
         tableView.allowsSelection = false
         tableView.delaysContentTouches = false
         
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height:20))
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.width, height:30))
         footerView.backgroundColor = .clear
         footerView.addSubview(activityIndicator)
         activityIndicator.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
@@ -49,6 +49,13 @@ class MainVC: UITableViewController {
         
         if let fetchedNews = DataService.shared.fetchNews() {
             news = fetchedNews
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if news.isEmpty {
+            activityIndicator.startAnimating()
         }
     }
     
@@ -77,9 +84,12 @@ class MainVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: newsCellId, for: indexPath) as! NewsCell
-        cell.delegate = self
         let specificNews = news[indexPath.row]
-        cell.configureWith(title: specificNews.title, description: specificNews.descr, imageUrl: specificNews.imageUrl)
+        var newsImage: UIImage?
+        if let imageData = specificNews.image {
+            newsImage = UIImage(data: imageData)
+        }
+        cell.configureWith(title: specificNews.title, description: specificNews.descr, image: newsImage)
         return cell
     }
     
@@ -101,14 +111,3 @@ class MainVC: UITableViewController {
     }
 
 }
-
-extension MainVC: NewsCellDelegate {
-    
-    func showImage(url: String?) {
-        let newsImageVC = NewsImageVC()
-        newsImageVC.imageUrl = url
-        navigationController?.pushViewController(newsImageVC, animated: true)
-    }
-    
-}
-

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		878E8B2C232D006600891B92 /* NewsImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878E8B2B232D006600891B92 /* NewsImageVC.swift */; };
 		878E8B2F232D114000891B92 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878E8B2E232D114000891B92 /* UIViewControllerExtension.swift */; };
 		878E8B32232D2F5400891B92 /* News+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878E8B30232D2F5400891B92 /* News+CoreDataClass.swift */; };
 		878E8B33232D2F5400891B92 /* News+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878E8B31232D2F5400891B92 /* News+CoreDataProperties.swift */; };
@@ -22,7 +21,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		878E8B2B232D006600891B92 /* NewsImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsImageVC.swift; sourceTree = "<group>"; };
 		878E8B2E232D114000891B92 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		878E8B30232D2F5400891B92 /* News+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "News+CoreDataClass.swift"; sourceTree = "<group>"; };
 		878E8B31232D2F5400891B92 /* News+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "News+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 			isa = PBXGroup;
 			children = (
 				87FB7AFD23296C2D00EA801B /* MainVC.swift */,
-				878E8B2B232D006600891B92 /* NewsImageVC.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -201,7 +198,6 @@
 				878E8B2F232D114000891B92 /* UIViewControllerExtension.swift in Sources */,
 				87FB7B13232970A200EA801B /* NetworkService.swift in Sources */,
 				87FB7B1B232C109800EA801B /* NewsCell.swift in Sources */,
-				878E8B2C232D006600891B92 /* NewsImageVC.swift in Sources */,
 				878E8B33232D2F5400891B92 /* News+CoreDataProperties.swift in Sources */,
 				87FB7B19232986F300EA801B /* Articles.swift in Sources */,
 				87FB7AFC23296C2D00EA801B /* AppDelegate.swift in Sources */,

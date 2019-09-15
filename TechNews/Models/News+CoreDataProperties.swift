@@ -21,5 +21,6 @@ extension News {
     @NSManaged public var title: String?
     @NSManaged public var descr: String?
     @NSManaged public var date: Date?
+    @NSManaged public var image: Data?
 
 }
