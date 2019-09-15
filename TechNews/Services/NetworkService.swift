@@ -12,7 +12,7 @@ class NetworkService {
     static let shared = NetworkService()
     private init() {}
     
-    private let APIKey = "feb17943bff24c4ba29db88d0979907b"
+    private let APIKey = "e8e0829067b34c2b8ce38e7d1ed43874"
     private let baseUrl = URL(string: "https://newsapi.org/v2/top-headlines")!
     
     func downloadNews(page: Int, completion: @escaping ([News]?) -> Void) {
